@@ -45,29 +45,20 @@ export default {
            "Content-type": "application/json",
            "Access-Control-Allow-Origin" : "*"
         },
-        body : JSON.stringify({email: "elon@gmail.com", password: "12345678"})
+        body : JSON.stringify({email: this.email, password: this.password})
       }
       
 
-      fetch("http://localhost:3000/auth/login/", requestOptions).then(async response => {
-      try {
-       const data = await response.json()
-       console.log('response data?', data)
-      } catch(error) {
-        console.log('Error happened here!')
-        console.error(error)
-      }
-      })
-      
-      // fetch('http://localhost:3000/auth/login/', requestOptions)
-      // .then(response => response.json())
-
-
-      
-      // .then(data => {
-      //   console.log(data)
+      fetch("http://localhost:3000/auth/signin/", requestOptions)
         
-      // })
+    
+      .then(response => response.json())
+
+      .then(data => {
+        console.log(data.accessToken)
+        localStorage.setItem('accessToken', data.accessToken)
+        window.location.href = '/'
+      })
 
     }
   }

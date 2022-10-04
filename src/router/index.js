@@ -1,11 +1,26 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import Login from '../views/Login.vue'
+
+const guard = function(to, from, next){
+  if(localStorage.getItem('accessToken') === 'undefined'){
+    localStorage.removeItem('accessToken')
+  }
+  if(localStorage.getItem('accessToken')){
+    next()
+  }else{
+    next('/login')
+  }
+}
+
 const routes = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
+    component: HomeView,
+    beforeEnter: (to, from, next) => {
+      guard(to, from, next)
+    }
   },
   {
     path: '/login',
